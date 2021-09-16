@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "811114977180",
+    "firebase_url": "https://mychatfirebase-9d55d-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "mychatfirebase-9d55d",
+    "storage_bucket": "mychatfirebase-9d55d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811114977180:android:17acbdee7779bf54cb5a59",
+        "android_client_info": {
+          "package_name": "com.android.mychatcool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "811114977180-qbjfldvr3f3fubggpie7uvto9cvcot9m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB60tr6jIEBVsVWYfK-hdJR4ViewYEcwFM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "811114977180-qbjfldvr3f3fubggpie7uvto9cvcot9m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
