@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "811114977180-38no400tpqsk3ndgnhc8tc9ndccvq69g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.mychatcool",
+            "certificate_hash": "d5532673b7fe92d19834e781ef97fa7f7895abbf"
+          }
+        },
+        {
           "client_id": "811114977180-qbjfldvr3f3fubggpie7uvto9cvcot9m.apps.googleusercontent.com",
           "client_type": 3
         }
