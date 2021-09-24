@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import com.android.mychatcool.databinding.ActivityMainBinding
+import com.android.mychatcool.databinding.ActivitySignInBinding
 import com.google.android.gms.auth.api.credentials.IdToken
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -20,18 +22,27 @@ import com.google.firebase.ktx.Firebase
 class SignInAct : AppCompatActivity() {
     lateinit var launcher: ActivityResultLauncher<Intent>
     lateinit var auth : FirebaseAuth
+    lateinit var binding: ActivitySignInBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_in)
+        binding = ActivitySignInBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         auth = Firebase.auth
+        //auth.currentUser
         launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
             try {
-
+                val account = task.getResult(ApiException::class.java)
+                if (account != null) {
+                    firebaseAuthWithGoogle(account.idToken!!)
+                }
             } catch (e: ApiException){
-                Log.d("MyLog", "Google signIn error" )
+                Log.d("MyLog", "Api exception" )
             }
+        }
+        binding.bSignIn.setOnClickListener {
+            signInWithGoogle()
         }
     }
 
