@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.mychatcool.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -15,10 +17,12 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
+import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var auth: FirebaseAuth
+    lateinit var adapter: UserAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +34,21 @@ class MainActivity : AppCompatActivity() {
         // Write a message to the database
         val database = Firebase.database
         val myRef = database.getReference("messages")
-
         binding.bSend.setOnClickListener {
-            myRef.setValue(binding.edMessage.text.toString())
+            myRef.child(myRef.push().key ?: "blabla")
+                .setValue(User(auth.currentUser?.displayName, binding.edMessage.text.toString()))
         }
         onChangeListener(myRef)
+        initRcView()
     }
+
+    private fun initRcView() = with(binding){
+        adapter = UserAdapter()
+        rcView.layoutManager = LinearLayoutManager(this@MainActivity)
+        rcView.adapter = adapter
+
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
@@ -55,14 +68,14 @@ class MainActivity : AppCompatActivity() {
     private fun onChangeListener(dRef: DatabaseReference) {
         dRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                binding.apply {
-                    rcView.append("\n")
-                    rcView.append("Mikhail: ${snapshot.value.toString()}")
+                val list = ArrayList<User>()
+                for (s in snapshot.children){
+                    val user = s.getValue(User::class.java)
+                    if (user != null)list.add(user)
                 }
+                adapter.submitList(list)
             }
-
             override fun onCancelled(error: DatabaseError) {
-
             }
         })
     }
